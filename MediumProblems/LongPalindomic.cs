@@ -28,8 +28,8 @@ namespace LeetCodePropblems.MediumProblems {
 
 
         public PalindromeModel LongestPalindrome(string s) {
-            string palindrome = string.Empty;
-            int palidndromeCount = 0;
+            string tempPalindrome = string.Empty;
+            int tempPalidndromeCount = 0;
 
             PalindromeModel model = new PalindromeModel();
 
@@ -39,24 +39,41 @@ namespace LeetCodePropblems.MediumProblems {
                 //first assign first letter repeat as palindromeKD
                 int x = 1;
                 bool isPalindrome = true;
-                if( i - x > 0) {
+                while ( i - x > 0 && isPalindrome && i <= charArray.Length-2) {
                     var aa = charArray[i - x + 1];
                     var bb = charArray[i + x];
                     var cc = charArray[i - x];
                     var dd = charArray[i + x];
 
                     if (charArray[i - x + 1] == charArray[i + x] && i != 0) {
-                        model.P_word = string.Concat(charArray[i - x + 1], charArray[i + x]);
+                        int startIndex = i - x + 1;
+                        int length = 2 * x;
+                        model.P_word = new string(charArray, startIndex, length);
 
+                        if (model.P_word.Length > tempPalidndromeCount) {
                         model.P_count = model.P_word.Length;
+                        tempPalidndromeCount = model.P_word.Length;
+                        }
                         x++;
-
+                        isPalindrome = true;
                     }
                     else if (charArray[i - x] == charArray[i + x] && i != 0) {
                         model.P_word = string.Concat(charArray[i - x], charArray[i + x]);
 
-                        model.P_count = model.P_word.Length;
+                        int startIndex = i - x;
+                        int length = 2 * x +1 ;
+                        model.P_word = new string(charArray, startIndex, length);
+
+                        if (model.P_word.Length > tempPalidndromeCount) {
+                            model.P_count = model.P_word.Length;
+                            tempPalidndromeCount = model.P_word.Length;
+                        }
                         x++;
+                        isPalindrome = true;
+
+                    }
+                    else {
+                        isPalindrome = false;
                     }
                 }
             }
