@@ -6,8 +6,8 @@ using System.Collections.Generic;
 
 public class Program {
     public static void Main() {
-        LongPalindomic longestPalindrome = new LongPalindomic();
+        Parentheses parentheses = new Parentheses();
 
-        longestPalindrome.Execute();
+        parentheses.Execute();
     }
 }
