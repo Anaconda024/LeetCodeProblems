@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeetCodePropblems.EasyProblems;
+using System;
 using System.Collections.Generic;
 using System.Security.AccessControl;
 using System.Text;
@@ -43,6 +44,7 @@ namespace LeetCodePropblems.MediumProblems {
 
             List<int[]> rows = GenerateRandoms(intArray);
 
+            var array = GenerateNewCharArray(rows);
 
             return answer;
         }
@@ -69,6 +71,21 @@ namespace LeetCodePropblems.MediumProblems {
             return uniqueArrangements;
         }
 
+        private List<char[]> GenerateNewCharArray(List<int[]> intArray) {
+            var newcharArray = new List<char[]>(); 
+            var newIntArray = new List<int[]>(); 
+            foreach (var array in intArray) {
+                if (CheckIfLegit(array)) {
+                    newIntArray.Add(array);
+                }
+            }
+            foreach (var array in newIntArray) {
+               var charArray = ConvertArrayIntToString(array);
+                newcharArray.Add(charArray);
+            }
+            return newcharArray;
+        }
+
         private int[] ConvertArrayStringToInt(char[] charArray) {
             int[] digits = new int[charArray.Length];
 
@@ -85,6 +102,24 @@ namespace LeetCodePropblems.MediumProblems {
 
             }
             return digits;
+        }
+
+        private char[] ConvertArrayIntToString(int[] digits) {
+            char[] charArray = new char[digits.Length];
+
+            for (int i = 0; i < digits.Length; i++) {
+                if (digits[i] == 1) {
+                    charArray[i] = '(';
+                }
+                else if (digits[i] == 0) {
+                    charArray[i] = ')';
+                }
+                else {
+                    // Adding '0' (48) maps 0-9 back onto the characters '0'-'9'
+                    charArray[i] = (char)(digits[i] + '0');
+                }
+            }
+            return charArray;
         }
 
         public static long CountUniqueArrangements(int[] arr) {
@@ -118,6 +153,22 @@ namespace LeetCodePropblems.MediumProblems {
             }
 
             return result;
+        }
+
+        private bool CheckIfLegit(int[] intArray) {
+            var length = intArray.Length;
+            var midpoint = length / 2;
+            var sum = 0;
+
+            for(int i = 0;i < midpoint; i++) {
+                sum += intArray[i];
+            }
+
+            if (sum < midpoint) {
+                return true;
+            }
+            else return false;
+
         }
     }
 }
