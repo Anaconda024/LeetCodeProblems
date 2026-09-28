@@ -46,6 +46,8 @@ namespace LeetCodePropblems.MediumProblems {
 
             var array = GenerateNewCharArray(rows);
 
+            answer = CharArraysToStrings(array);
+
             return answer;
         }
 
@@ -169,6 +171,10 @@ namespace LeetCodePropblems.MediumProblems {
             }
             else return false;
 
+        }
+
+        public static List<string> CharArraysToStrings(List<char[]> charArrays) {
+            return charArrays.Select(chars => new string(chars)).ToList();
         }
     }
 }
