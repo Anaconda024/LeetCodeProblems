@@ -20,7 +20,11 @@ namespace LeetCodePropblems.MediumProblems {
                 try {
                     int n = int.Parse(input);
                     IList<string> answer = GenerateParenthesis(n);
-                    Console.WriteLine($"Palindrome: [{answer}]");
+                    int count = 1;
+                    foreach(string palidrome in answer) {                        
+                        Console.WriteLine($"Palindrome {count}: {palidrome}");
+                        count++;
+                    }                    
                 }
                 catch (Exception ex) {
                     Console.WriteLine($"Error: {ex.Message}");
@@ -44,9 +48,13 @@ namespace LeetCodePropblems.MediumProblems {
 
             List<int[]> rows = GenerateRandoms(intArray);
 
-            var array = GenerateNewCharArray(rows);
+            var arrays = GenerateNewCharArray(rows);
 
-            answer = CharArraysToStrings(array);
+            answer = CharArraysToStrings(arrays);
+
+            for (int i = 0; i < answer.Count; i++) {
+                answer[i] = $"({answer[i]})";
+            }
 
             return answer;
         }
@@ -60,7 +68,7 @@ namespace LeetCodePropblems.MediumProblems {
 
             uniqueArrangements.Add(trimmed);
             int count = 1;
-            if(targetCount == count) {
+            if(targetCount != count) {
                 while (count < targetCount) {
                     var shuffled = Shuffle(trimmed);
                     if (!uniqueArrangements.Any(arr => arr.SequenceEqual(shuffled))) {
@@ -158,6 +166,7 @@ namespace LeetCodePropblems.MediumProblems {
         }
 
         private bool CheckIfLegit(int[] intArray) {
+            bool legit = false;
             var length = intArray.Length;
             var midpoint = length / 2;
             var sum = 0;
@@ -167,9 +176,12 @@ namespace LeetCodePropblems.MediumProblems {
             }
 
             if (sum < midpoint) {
-                return true;
+                legit = true;
             }
-            else return false;
+            if(sum == 0) {
+                legit = false;
+            }
+            return legit;
 
         }
 
